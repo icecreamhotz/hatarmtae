@@ -3,7 +3,9 @@ package deck
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 type deck []string
@@ -50,13 +52,15 @@ func (d deck) NewDeckFromFile(filename string) deck {
 		fmt.Println("Error", err)
 	}
 
-	eiei := deck{}
-	phew := string(bs)
-	lnwza := strings.Split(phew, ",")
+	return deck(strings.Split(string(bs), ","))
+}
 
-	for _, v := range lnwza {
-		eiei = append(eiei, v)
+func (d deck) shuffle() deck {
+	eiei := rand.NewSource(time.Now().UnixNano())
+	lnwza := rand.New(eiei)
+	fmt.Println(lnwza)
+	for _, haha := range d {
+		d[0], d[lnwza.Intn(len(d)-1)] = d[lnwza.Intn(len(d)-1)], haha
 	}
-
-	return eiei
+	return d
 }
